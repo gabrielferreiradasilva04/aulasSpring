@@ -3,6 +3,8 @@ package com.projeto.vendas.model;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,6 +25,10 @@ public class Cliente {
     @Column(name = "nome", length = 100)
     private String nome;
     
+    @Column(name = "cpf", length = 11)
+    private String cpf;
+    
+    @JsonIgnore
     @OneToMany(mappedBy = "cliente") /*No caso desse tipo de notação podemos trazer todos os pedidos do cliente sempre que buscarmos ele, basta trocar o fetch type para eager
     Isso pode ser ruim, pois sempre que eu quiser um cliente ele vem com todos os seus pedidos juntos, deixando a consulta pesada*/
     private Set<Pedido> pedidos; /*evita erros do hibernate e permite que exista apenas um pedido único por entidade*/
@@ -62,6 +68,16 @@ public class Cliente {
 
 	public void setPedidos(Set<Pedido> pedidos) {
 		this.pedidos = pedidos;
+	}
+	
+	
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}
 
 	@Override
